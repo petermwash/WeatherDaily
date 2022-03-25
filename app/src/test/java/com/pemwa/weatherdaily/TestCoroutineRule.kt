@@ -28,6 +28,9 @@ class TestCoroutineRule : TestRule {
         }
     }
 
+    /**
+     * run test in test coroutine scope
+     */
     fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
         testCoroutineScope.runBlockingTest { block() }
 }

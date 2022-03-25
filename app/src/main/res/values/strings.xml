@@ -2,4 +2,9 @@
     <string name="app_name">Weather Daily</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_weather_value">%s°</string>
+    <string name="text_min">min</string>
+    <string name="text_current">Current</string>
+    <string name="text_max">max</string>
+    <string name="text_loading_data">Loading data...</string>
 </resources>

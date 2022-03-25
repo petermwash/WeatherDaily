@@ -3,12 +3,197 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.WeatherFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:background="@drawable/forest_sunny"
+        app:layout_constraintBottom_toTopOf="@id/clBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvMainValue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="0dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="bottom|center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="46sp"
+            android:includeFontPadding="false"
+            app:layout_constraintBottom_toTopOf="@id/tvMainLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tvMainLabel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="0dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:includeFontPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tvMainValue"
+            app:layout_constraintStart_toStartOf="@id/tvMainValue"
+            app:layout_constraintTop_toBottomOf="@id/tvMainValue"
+            tools:text="SUNNY" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorSunny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clTop">
+
+        <TextView
+            android:id="@+id/tvMinValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18"
+            android:includeFontPadding="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="19°" />
+
+        <TextView
+            android:id="@+id/tvMinLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/text_min"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toEndOf="@id/tvMinValue"
+            app:layout_constraintStart_toStartOf="@id/tvMinValue"
+            app:layout_constraintTop_toBottomOf="@id/tvMinValue"
+            tools:text="min" />
+
+        <TextView
+            android:id="@+id/tvCurrentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toStartOf="@id/tvMaxValue"
+            app:layout_constraintStart_toEndOf="@id/tvMinValue"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tvCurrentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/text_current"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toEndOf="@id/tvCurrentValue"
+            app:layout_constraintStart_toStartOf="@id/tvCurrentValue"
+            app:layout_constraintTop_toBottomOf="@id/tvCurrentValue"
+            tools:text="Current" />
+
+        <TextView
+            android:id="@+id/tvMaxValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_18"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="27°" />
+
+        <TextView
+            android:id="@+id/tvMaxLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/text_max"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:includeFontPadding="false"
+            app:layout_constraintEnd_toEndOf="@id/tvMaxValue"
+            app:layout_constraintStart_toStartOf="@id/tvMaxValue"
+            app:layout_constraintTop_toBottomOf="@id/tvMaxValue"
+            tools:text="max" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCurrentLabel" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvForecastWeather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_forecast_weather" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tvLoadingData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_loading_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16"
+            android:fontFamily="@font/poppins_medium"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

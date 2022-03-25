@@ -23,6 +23,9 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+/**
+ * Weather ViewModel test class
+ */
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class WeatherViewModelTest {
@@ -40,6 +43,9 @@ class WeatherViewModelTest {
     private val weatherRepository = Mockito.mock(WeatherRepository::class.java)
     private val weatherViewModel = WeatherViewModel(weatherRepository, fakeApp)
 
+    /**
+     * Test ViewModel can fetch current weather
+     */
     @Test
     fun test_fetchCurrentWeather() = testDispatcher.runBlockingTest {
         val currentWeather = CurrentWeather(
@@ -62,6 +68,9 @@ class WeatherViewModelTest {
         Assert.assertEquals(currentWeather, weatherViewModel.currentWeather.value?.data)
     }
 
+    /**
+     * Test ViewModel can fetch forecast weather
+     */
     @Test
     fun test_fetchForecastWeather() = testDispatcher.runBlockingTest {
         val forecastWeather = ForecastWeather(

@@ -19,9 +19,10 @@ interface WeatherService {
      */
     @GET("data/2.5/weather")
     suspend fun getCurrentWeather(
-        @Query("lat") lat:String,
-        @Query("lon") lon:String,
-        @Query("appid") appId:String
+        @Query("lat") lat: String,
+        @Query("lon") lon: String,
+        @Query("appid") appId: String,
+        @Query("units") units: String = "metric"
     ): Response<CurrentWeather>
 
     /**
@@ -34,7 +35,8 @@ interface WeatherService {
     suspend fun getForecastWeather(
         @Query("lat") lat:String,
         @Query("lon") lon:String,
-        @Query("appid") appId:String
+        @Query("appid") appId:String,
+        @Query("units") units: String = "metric"
     ): Response<ForecastWeather>
 
 }
