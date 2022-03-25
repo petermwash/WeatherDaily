@@ -3,6 +3,9 @@ package com.pemwa.weatherdaily.base
 import com.pemwa.weatherdaily.util.NetworkResult
 import retrofit2.Response
 
+/**
+ * Encapsulate basic API response checks from the ViewModel class
+ */
 abstract class BaseApiResponse {
 
     suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T> {

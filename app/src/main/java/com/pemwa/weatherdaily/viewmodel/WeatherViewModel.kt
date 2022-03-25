@@ -14,26 +14,45 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * Weather ViewModel class
+ */
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val _currentResponse: MutableLiveData<NetworkResult<CurrentWeather>> = MutableLiveData()
-    val currentResponse: LiveData<NetworkResult<CurrentWeather>> = _currentResponse
+    private val _currentWeather: MutableLiveData<NetworkResult<CurrentWeather>> = MutableLiveData()
+    val currentWeather: LiveData<NetworkResult<CurrentWeather>> = _currentWeather
 
     private val _forecastWeather: MutableLiveData<NetworkResult<ForecastWeather>> = MutableLiveData()
     val forecastWeather: LiveData<NetworkResult<ForecastWeather>> = _forecastWeather
 
-    fun fetchCurrentWeather() = viewModelScope.launch {
-        repository.getCurrentWeather().collect { value ->
-            _currentResponse.value = value
+    /**
+     * Fetch current weather
+     * @param lat current location latitude
+     * @param lon current location longitude
+     */
+    fun fetchCurrentWeather(
+        lat: String,
+        lon: String
+    ) = viewModelScope.launch {
+        repository.getCurrentWeather(lat, lon).collect { value ->
+            _currentWeather.value = value
         }
     }
 
-    fun fetchForecastWeather() = viewModelScope.launch {
-        repository.getForecastWeather().collect { value ->
+    /**
+     * Fetch weather forecast
+     * @param lat current location latitude
+     * @param lon current location longitude
+     */
+    fun fetchForecastWeather(
+        lat: String,
+        lon: String
+    ) = viewModelScope.launch {
+        repository.getForecastWeather(lat, lon).collect { value ->
             _forecastWeather.value = value
         }
     }
