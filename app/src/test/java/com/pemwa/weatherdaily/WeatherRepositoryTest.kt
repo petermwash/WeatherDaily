@@ -29,6 +29,9 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
+/**
+ * Weather repository test class
+ */
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
 class WeatherRepositoryTest {
@@ -49,6 +52,9 @@ class WeatherRepositoryTest {
     private val weatherViewModel = WeatherViewModel(weatherRepository, fakeApp)
     private val weatherService = Mockito.mock(WeatherService::class.java)
 
+    /**
+     * test repository can get current weather
+     */
     @Test
     fun test_getCurrentWeather() = testDispatcher.runBlockingTest {
         val currentWeather = CurrentWeather(

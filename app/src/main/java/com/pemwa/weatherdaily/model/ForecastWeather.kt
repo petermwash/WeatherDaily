@@ -16,7 +16,7 @@ data class ForecastWeather(
  * Data object
  */
 data class Data(
-    @SerializedName("dt") val date: Int,
+    @SerializedName("dt") val date: Long,
     @SerializedName("main") val main: DataMain,
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("dt_txt") val dateText: String
