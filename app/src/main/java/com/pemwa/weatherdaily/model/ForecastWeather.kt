@@ -1,11 +1,16 @@
 package com.pemwa.weatherdaily.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 /**
  * ForecastWeather object
  */
+@Entity(tableName = "forecast_weather_table")
 data class ForecastWeather(
+    @PrimaryKey(autoGenerate = true) val id: Int,
     @SerializedName("cod") val code: Int,
     @SerializedName("message") val message: String,
     @SerializedName("cnt") val cnt: String,
@@ -17,7 +22,7 @@ data class ForecastWeather(
  */
 data class Data(
     @SerializedName("dt") val date: Long,
-    @SerializedName("main") val main: DataMain,
+    @Embedded @SerializedName("main") val dataMain: DataMain,
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("dt_txt") val dateText: String
 )

@@ -5,13 +5,13 @@ package com.pemwa.weatherdaily.util
  */
 sealed class NetworkResult<T>(
     val data: T? = null,
-    val message: String? = null
+    val error: Throwable? = null
 ) {
 
     /**
      * Loading state
      */
-    class Loading<T> : NetworkResult<T>()
+    class Loading<T>(data: T? = null) : NetworkResult<T>(data)
 
     /**
      * Success state
@@ -21,6 +21,6 @@ sealed class NetworkResult<T>(
     /**
      * Error state
      */
-    class Error<T>(message: String, data: T? = null) : NetworkResult<T>(data, message)
+    class Error<T>(throwable: Throwable, data: T? = null) : NetworkResult<T>(data, throwable)
 
 }

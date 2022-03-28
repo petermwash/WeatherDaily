@@ -53,7 +53,8 @@ object NetworkModule {
 
     /**
      * Provides a retrofit object
-     */@Singleton
+     */
+    @Singleton
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,

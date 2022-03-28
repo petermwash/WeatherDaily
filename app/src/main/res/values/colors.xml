@@ -13,4 +13,6 @@
     <color name="colorRainy">#57575D</color>
     <color name="colorSnackBarError">#F72400</color>
     <color name="colorSnackBarSuccess">#8BC34A</color>
+    <color name="colorTransparentGrey">#00FFFFFF</color>
+    <color name="colorTransparentBlack">#7F000000</color>
 </resources>

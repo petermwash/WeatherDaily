@@ -53,6 +53,7 @@ dependencies {
     def loggingInterceptorVersion = '4.9.1'
     def coroutinesVersion = '1.4.3'
     def lifeCycleVersion = '2.2.0'
+    def room_version = "2.3.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -68,7 +69,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
     kapt "androidx.hilt:hilt-compiler:$hiltLifeCycleVersion"
-//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifeCycleVersion"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    implementation 'com.google.dagger:hilt-android:2.38.1'
+    kapt 'com.google.dagger:hilt-compiler:2.37'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -96,4 +99,12 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
     // For InstantTaskExecutorRule
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Data store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }

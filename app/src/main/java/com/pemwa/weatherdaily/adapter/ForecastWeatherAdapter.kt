@@ -56,7 +56,8 @@ class ForecastWeatherAdapter :
         fun bind(item: Triple<String, Int, String>) {
             itemView.apply {
                 tvForecastDay.text = item.first
-                tvForecastValue.text = item.third
+                tvForecastValue.text =
+                    this.context.getString(R.string.text_weather_value, item.third)
                 when(item.second) {
                     1 -> ivForecastIcon.setImageDrawable(
                         ContextCompat.getDrawable(this.context, R.drawable.partlysunny_3x)
