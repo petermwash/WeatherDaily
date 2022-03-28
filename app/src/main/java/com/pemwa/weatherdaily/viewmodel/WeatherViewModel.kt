@@ -5,13 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.pemwa.weatherdaily.data.datastore.DataStoreManager
 import com.pemwa.weatherdaily.data.repository.WeatherRepository
 import com.pemwa.weatherdaily.model.CurrentWeather
 import com.pemwa.weatherdaily.model.ForecastWeather
+import com.pemwa.weatherdaily.util.Constants.Companion.PREF_KEY_LAST_UPDATED
 import com.pemwa.weatherdaily.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -20,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
+    private val dataStoreRepository: DataStoreManager,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -55,5 +59,9 @@ class WeatherViewModel @Inject constructor(
         repository.getForecastWeather(lat, lon).collect { value ->
             _forecastWeather.value = value
         }
+    }
+
+    fun getLastUpdated(): String? = runBlocking {
+        dataStoreRepository.getString(PREF_KEY_LAST_UPDATED)
     }
 }

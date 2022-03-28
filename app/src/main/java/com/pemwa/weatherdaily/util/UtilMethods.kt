@@ -1,10 +1,9 @@
 package com.pemwa.weatherdaily.util
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.pemwa.weatherdaily.model.Data
 import java.text.SimpleDateFormat
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -50,7 +49,10 @@ class UtilMethods {
         fun processForecastData(data: List<Data>): List<Triple<String, Int, String>> {
             val processed = mutableListOf<Triple<String, Int, String>>()
             val mapped = data.map {
-                it.date to Triple(getDayOfWeek(it.dateText), it.main.temp, getWeatherType(it.weather[0].main))
+                it.date to Triple(
+                    getDayOfWeek(it.dateText),
+                    it.dataMain.temp,
+                    getWeatherType(it.weather[0].weatherMain))
             }.toMap().values
             val passed = mutableListOf<String>()
             mapped.forEach {
@@ -63,6 +65,15 @@ class UtilMethods {
             }
 
             return processed
+        }
+
+        /**
+         * Get current date time as a string
+         */
+        fun getCurrentTime(): String {
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            return current.format(formatter)
         }
     }
 }

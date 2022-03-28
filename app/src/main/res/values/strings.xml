@@ -6,5 +6,7 @@
     <string name="text_min">min</string>
     <string name="text_current">Current</string>
     <string name="text_max">max</string>
-    <string name="text_loading_data">Loading data...</string>
+    <string name="text_loading_data">Loading data…</string>
+    <string name="desc_cancel_icon">Cancel Icon</string>
+    <string name="text_last_updated">Last Updated: %s</string>
 </resources>

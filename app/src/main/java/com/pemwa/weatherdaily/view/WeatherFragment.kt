@@ -4,11 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,13 +17,11 @@ import com.pemwa.weatherdaily.adapter.ForecastWeatherAdapter
 import com.pemwa.weatherdaily.databinding.FragmentWeatherBinding
 import com.pemwa.weatherdaily.model.CurrentWeather
 import com.pemwa.weatherdaily.model.Data
+import com.pemwa.weatherdaily.util.*
+import com.pemwa.weatherdaily.util.ConnectivityUtil.isDeviceOnline
 import com.pemwa.weatherdaily.util.Constants.Companion.LOCATION_PERMISSION_CODE
-import com.pemwa.weatherdaily.util.NetworkResult
 import com.pemwa.weatherdaily.util.UtilMethods.Companion.getWeatherType
 import com.pemwa.weatherdaily.util.UtilMethods.Companion.processForecastData
-import com.pemwa.weatherdaily.util.gone
-import com.pemwa.weatherdaily.util.showErrorSnackBar
-import com.pemwa.weatherdaily.util.visible
 import com.pemwa.weatherdaily.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
@@ -86,6 +82,28 @@ class WeatherFragment : Fragment() {
             }
         }
 
+        setUpViews()
+    }
+
+    /**
+     * Sets up views and their click events
+     */
+    private fun setUpViews() {
+        if(!isDeviceOnline(requireContext()) && viewModel.getLastUpdated() != null) {
+            binding.tvLastUpdated.text =
+                getString(R.string.text_last_updated, viewModel.getLastUpdated())
+            binding.cvLastUpdated.visible()
+        }
+        binding.ivCancelIcon.setOnClickListener {
+            binding.cvLastUpdated.gone()
+        }
+    }
+
+    /**
+     * Call back for when the view is in the foreground
+     */
+    override fun onResume() {
+        super.onResume()
         getLastLocation()
     }
 
@@ -144,16 +162,22 @@ class WeatherFragment : Fragment() {
         viewModel.currentWeather.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Loading -> {
-                    binding.tvLoadingData.visible()
+                    if (response.data == null) {
+                        binding.tvLoadingData.visible()
+                    } else {
+                        populateCurrentWeather(response.data)
+                    }
                 }
                 is NetworkResult.Success -> {
                     populateCurrentWeather(response.data)
                 }
                 is NetworkResult.Error -> {
-                    response.message?.let {
-                        (requireActivity() as WeatherActivity).showErrorSnackBar(
-                            it, true
-                        )
+                    response.error?.message.let {
+                        if (it != null) {
+                            (requireActivity() as WeatherActivity).showErrorSnackBar(
+                                it, true
+                            )
+                        }
                     }
                 }
             }
@@ -168,7 +192,7 @@ class WeatherFragment : Fragment() {
         if (currentWeather != null) {
             binding.tvMainValue.text =
                 getString(R.string.text_weather_value, currentWeather.main.temp.toString())
-            binding.tvMainLabel.text = getWeatherType(currentWeather.weather[0].main).first
+            binding.tvMainLabel.text = getWeatherType(currentWeather.weather[0].weatherMain).first
             binding.tvMinValue.text =
                 getString(R.string.text_weather_value, currentWeather.main.tempMin.toString())
             binding.tvCurrentValue.text =
@@ -176,7 +200,7 @@ class WeatherFragment : Fragment() {
             binding.tvMaxValue.text =
                 getString(R.string.text_weather_value, currentWeather.main.tempMax.toString())
 
-            updateBG(getWeatherType(currentWeather.weather[0].main).second)
+            updateBG(getWeatherType(currentWeather.weather[0].weatherMain).second)
         }
     }
 
@@ -188,27 +212,26 @@ class WeatherFragment : Fragment() {
             1 -> {
                 binding.clTop.background =
                     ContextCompat.getDrawable(requireContext(),R.drawable.forest_cloudy)
-                binding.clBottom.setBackgroundColor(
+                binding.clScreen.setBackgroundColor(
                     ContextCompat.getColor(requireContext(), R.color.colorCloudy)
                 )
             }
             2 -> {
                 binding.clTop.background =
                     ContextCompat.getDrawable(requireContext(),R.drawable.forest_sunny)
-                binding.clBottom.setBackgroundColor(
+                binding.clScreen.setBackgroundColor(
                     ContextCompat.getColor(requireContext(), R.color.colorSunny)
                 )
             }
             3 -> {
                 binding.clTop.background =
                     ContextCompat.getDrawable(requireContext(),R.drawable.forest_rainy)
-                binding.clBottom.setBackgroundColor(
+                binding.clScreen.setBackgroundColor(
                     ContextCompat.getColor(requireContext(), R.color.colorRainy)
                 )
             }
         }
     }
-
 
     /**
      * Invokes fetching of the weather forecast
@@ -220,16 +243,22 @@ class WeatherFragment : Fragment() {
         viewModel.forecastWeather.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Loading -> {
-                    binding.tvLoadingData.visible()
+                    if (response.data == null) {
+                        binding.tvLoadingData.visible()
+                    } else {
+                        populatesForecastData(response.data.weather)
+                    }
                 }
                 is NetworkResult.Success -> {
                     populatesForecastData(response.data?.weather)
                 }
                 is NetworkResult.Error -> {
-                    response.message?.let {
-                        (requireActivity() as WeatherActivity).showErrorSnackBar(
-                            it, true
-                        )
+                    response.error?.message.let {
+                        if (it != null) {
+                            (requireActivity() as WeatherActivity).showErrorSnackBar(
+                                it, true
+                            )
+                        }
                     }
                 }
             }
