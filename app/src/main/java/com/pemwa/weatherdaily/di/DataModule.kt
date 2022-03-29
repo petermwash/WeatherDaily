@@ -12,21 +12,36 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+/**
+ * Data Module class
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
+    /**
+     * Provides an instance of app's room database
+     * @param context app context
+     */
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): WeatherDatabase =
         WeatherDatabase.create(context)
 
+    /**
+     * Provides an instance of the database DAO
+     * @param database app context
+     */
     @Provides
     @Singleton
     fun provideDao(database: WeatherDatabase): WeatherDao {
         return database.weatherDao()
     }
 
+    /**
+     * Provides an instance of app's data store
+     * @param appContext app context
+     */
     @Provides
     @Singleton
     fun provideDataStoreManager(@ApplicationContext appContext: Context): DataStoreManager =

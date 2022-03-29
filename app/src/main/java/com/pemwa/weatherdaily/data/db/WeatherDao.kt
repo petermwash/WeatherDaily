@@ -5,6 +5,9 @@ import com.pemwa.weatherdaily.model.CurrentWeather
 import com.pemwa.weatherdaily.model.ForecastWeather
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Weather DAO interface
+ */
 @Dao
 interface WeatherDao {
 

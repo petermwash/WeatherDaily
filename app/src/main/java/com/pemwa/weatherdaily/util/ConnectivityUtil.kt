@@ -4,8 +4,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
+/**
+ * Intenet Connectivity object
+ */
 object ConnectivityUtil {
 
+    /**
+     * Checks if a device is connected to the internet
+     * @param context Context
+     * @return Boolean
+     */
     fun isDeviceOnline(context: Context?): Boolean {
 
         val connectivityManager =

@@ -2,6 +2,7 @@ package com.pemwa.weatherdaily
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.pemwa.weatherdaily.data.datastore.DataStoreManager
 import com.pemwa.weatherdaily.data.repository.WeatherRepository
 import com.pemwa.weatherdaily.model.*
 import com.pemwa.weatherdaily.util.NetworkResult
@@ -41,7 +42,8 @@ class WeatherViewModelTest {
     private val testLon = "36"
     private val fakeApp = Mockito.mock(Application::class.java)
     private val weatherRepository = Mockito.mock(WeatherRepository::class.java)
-    private val weatherViewModel = WeatherViewModel(weatherRepository, fakeApp)
+    private val dataStore = Mockito.mock(DataStoreManager::class.java)
+    private val weatherViewModel = WeatherViewModel(weatherRepository, dataStore, fakeApp)
 
     /**
      * Test ViewModel can fetch current weather
@@ -49,7 +51,6 @@ class WeatherViewModelTest {
     @Test
     fun test_fetchCurrentWeather() = testDispatcher.runBlockingTest {
         val currentWeather = CurrentWeather(
-            200,
             "Name",
             listOf(Weather(1, "Rain", "Rainy", "0d")),
             Main(23.5F, 23.0F, 22.8F, 23.7F, 10, 36)
@@ -74,7 +75,7 @@ class WeatherViewModelTest {
     @Test
     fun test_fetchForecastWeather() = testDispatcher.runBlockingTest {
         val forecastWeather = ForecastWeather(
-            200, "", "", listOf(
+            1,200, "", "", listOf(
                 Data(22222, DataMain(23.5F, 23.0F, 22.8F, 23.7F, 10, 36),
                     listOf(Weather(1, "Rain", "Rainy", "0d")),
                     ""

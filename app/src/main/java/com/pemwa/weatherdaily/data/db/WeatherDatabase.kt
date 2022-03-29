@@ -20,6 +20,10 @@ abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
 
     companion object {
+        /**
+         * Creates an instance of the database
+         * @param context app context
+         */
         fun create(context: Context): WeatherDatabase {
 
             return Room.databaseBuilder(

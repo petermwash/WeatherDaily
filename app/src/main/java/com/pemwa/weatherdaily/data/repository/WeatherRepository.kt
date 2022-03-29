@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 @ActivityRetainedScoped
 class WeatherRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
+    val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val context: Context,
     private val dataStoreRepository: DataStoreManager,
@@ -40,9 +40,6 @@ class WeatherRepository @Inject constructor(
             dataStoreRepository.putString(PREF_KEY_LAST_UPDATED, getCurrentTime())
             response.body()?.let { it -> localDataSource.updateCurrentWeather(it) }
         },
-        shouldFetchRemote = {
-            isDeviceOnline(context)
-        }
     )
 
     /**
@@ -59,6 +56,7 @@ class WeatherRepository @Inject constructor(
             remoteDataSource.getForecastWeather(lat, lon)
         },
         saveRemoteData = { response ->
+            dataStoreRepository.putString(PREF_KEY_LAST_UPDATED, getCurrentTime())
             response.body()?.let { it -> localDataSource.updateForecastWeather(it) }
         },
         shouldFetchRemote = {

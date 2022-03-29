@@ -89,6 +89,8 @@ class WeatherFragment : Fragment() {
      * Sets up views and their click events
      */
     private fun setUpViews() {
+        binding.cvLastUpdated.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.bg_rounded_coners)
         if(!isDeviceOnline(requireContext()) && viewModel.getLastUpdated() != null) {
             binding.tvLastUpdated.text =
                 getString(R.string.text_last_updated, viewModel.getLastUpdated())
@@ -159,7 +161,7 @@ class WeatherFragment : Fragment() {
      */
     private fun fetchCurrentWeather(lat: String, lon: String) {
         viewModel.fetchCurrentWeather(lat, lon)
-        viewModel.currentWeather.observe(viewLifecycleOwner, { response ->
+        viewModel.currentWeather.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Loading -> {
                     if (response.data == null) {
@@ -172,16 +174,22 @@ class WeatherFragment : Fragment() {
                     populateCurrentWeather(response.data)
                 }
                 is NetworkResult.Error -> {
-                    response.error?.message.let {
-                        if (it != null) {
-                            (requireActivity() as WeatherActivity).showErrorSnackBar(
-                                it, true
-                            )
+                    if (isDeviceOnline(requireContext())){
+                        response.error?.message.let {
+                            if (it != null) {
+                                (requireActivity() as WeatherActivity).showErrorSnackBar(
+                                    it, true
+                                )
+                            }
                         }
+                    } else {
+                        (requireActivity() as WeatherActivity).showErrorSnackBar(
+                            "Please check your internet connection", true
+                        )
                     }
                 }
             }
-        })
+        }
     }
 
     /**
@@ -240,7 +248,7 @@ class WeatherFragment : Fragment() {
      */
     private fun fetchForecastWeather(lat: String, lon: String) {
         viewModel.fetchForecastWeather(lat, lon)
-        viewModel.forecastWeather.observe(viewLifecycleOwner, { response ->
+        viewModel.forecastWeather.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Loading -> {
                     if (response.data == null) {
@@ -262,7 +270,7 @@ class WeatherFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     /**
