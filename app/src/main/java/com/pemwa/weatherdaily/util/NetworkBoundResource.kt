@@ -2,6 +2,9 @@ package com.pemwa.weatherdaily.util
 
 import kotlinx.coroutines.flow.*
 
+/**
+ * Handles the logic of the data will be fetched from local/remote
+ */
 inline fun <LOCAL, REMOTE> networkBoundResource(
     crossinline fetchLocal: () -> Flow<LOCAL>,
     crossinline fetchRemote: suspend () -> REMOTE,

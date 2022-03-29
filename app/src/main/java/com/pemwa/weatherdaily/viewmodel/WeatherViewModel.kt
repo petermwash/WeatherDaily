@@ -61,6 +61,9 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetches the last updated time fro data store
+     */
     fun getLastUpdated(): String? = runBlocking {
         dataStoreRepository.getString(PREF_KEY_LAST_UPDATED)
     }

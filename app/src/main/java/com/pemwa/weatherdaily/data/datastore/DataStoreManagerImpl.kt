@@ -12,9 +12,18 @@ import javax.inject.Inject
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = KEY_PREFERENCES_NAME)
 
+/**
+ * Implementation of the DataStoreManager interface
+ */
 class DataStoreManagerImpl @Inject constructor(
-    private val context: Context) : DataStoreManager {
+    private val context: Context
+    ) : DataStoreManager {
 
+    /**
+     * Saves a string to data store
+     * @param key key tied to the value being saved
+     * @param value value to be saved
+     */
     override suspend fun putString(key: String, value: String) {
         val preferencesKey = stringPreferencesKey(key)
         context.dataStore.edit { preferences ->
@@ -22,6 +31,11 @@ class DataStoreManagerImpl @Inject constructor(
         }
     }
 
+    /**
+     * gets a string from data store
+     * @param key key tied to the value being retrieved
+     * @return String the value
+     */
     override suspend fun getString(key: String): String? {
         return try {
             val preferencesKey = stringPreferencesKey(key)

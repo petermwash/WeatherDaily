@@ -53,6 +53,9 @@ class ForecastWeatherAdapter :
      * ViewHolder class
      */
     class ForecastWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        /**
+         * Binds the view with the item data
+         */
         fun bind(item: Triple<String, Int, String>) {
             itemView.apply {
                 tvForecastDay.text = item.first
