@@ -56,6 +56,9 @@ android {
         }
         unitTests.returnDefaultValues = true
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
