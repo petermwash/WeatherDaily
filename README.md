@@ -5,9 +5,9 @@
 
 # Weather Daily
 
- - `Weather Daily` is a weather application that keeps users updated on the current status of weather at the current user's location. 
+ - `Weather Daily` is a weather application that keeps users updated on the current status of weather at their current location. 
  
-- It also give the next five days weather forecast on the same location. 
+- It also gives the next five days' weather forecast for the same location. 
  
 - It has the capability of displaying weather data even in offline mode with a dismissable notification informing the user on the last the data was updated from the [API](https://openweathermap.org/)
 
@@ -20,7 +20,7 @@
 
 2. Open the project in Android Studio; under the file menu select open, then select an existing project. Navigate to the folder you cloned then open the project.
 
-4. Get an `API KEY` from [openweathermap.org](https://openweathermap.org/), create a file named `apikey.properties` to the root folder and add the `API KEY` to the file.
+4. Get an `API KEY` from [openweathermap.org](https://openweathermap.org/), create a file named `apikey.properties` to the root folder, and add the `API KEY` to the file.
 
 5. Run the app on an emulator or on your Android device.
 
@@ -55,7 +55,7 @@ etc.
 
 ## Architecture
 
-The app follow an [MVVM](https://developer.android.com/jetpack/guide) architecture pattern
+The app follows an [MVVM](https://developer.android.com/jetpack/guide) architecture pattern
 
 
 
